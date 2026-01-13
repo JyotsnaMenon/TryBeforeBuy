@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TryBeforeBuy</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Virtual Try-On</h1>
+
+    <label class="file-label">
+      Person Image
+      <input type="file" id="personImage" accept="image/*" />
+    </label>
+
+    <label class="file-label">
+      Garment Image
+      <input type="file" id="garmentImage" accept="image/*" />
+    </label>
+
+    <button id="generateBtn">Generate</button>
+
+    <p id="status"></p>
+    <div id="output"></div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
