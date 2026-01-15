@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Try-On AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>👗 Virtual Try-On AI</h1>
+    <p class="subtitle">Upload your photo and garment to see the magic!</p>
+
+    <div class="upload-section">
+      <!-- Person Image Upload -->
+      <div class="upload-box" id="personBox">
+        <div class="upload-icon">👤</div>
+        <h3>Person Image</h3>
+        <p>Upload a clear photo of yourself</p>
+        <label for="personImage" class="btn-upload">Choose Image</label>
+        <input type="file" id="personImage" accept="image/*">
+        <img class="preview-image" id="personPreview" alt="Person Preview">
+      </div>
+
+      <!-- Garment Image Upload -->
+      <div class="upload-box" id="garmentBox">
+        <div class="upload-icon">👕</div>
+        <h3>Garment Image</h3>
+        <p>Upload the clothing item you want to try</p>
+        <label for="garmentImage" class="btn-upload">Choose Image</label>
+        <input type="file" id="garmentImage" accept="image/*">
+        <img class="preview-image" id="garmentPreview" alt="Garment Preview">
+      </div>
+    </div>
+
+    <button class="generate-btn" id="generateBtn" disabled>
+      🎨 Generate Try-On
+    </button>
+
+    <div class="status" id="status"></div>
+
+    <div class="output" id="output">
+      <h2>✨ Your Virtual Try-On Result</h2>
+      <img id="resultImage" alt="Try-On Result">
+      <br><br>
+      <button class="download-btn" id="downloadBtn">
+        📥 Download Image
+      </button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
