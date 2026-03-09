@@ -1,0 +1,256 @@
+[
+  {
+    "id": 1,
+    "name": "Baby Pink Cotton Top",
+    "category": "top",
+    "gender": "female",
+    "age_group": "baby",
+    "color": "pink",
+    "style": "casual",
+    "image": "https://static.zara.net/assets/public/d354/2b7d/1e2448e4af34/173c40a38726/01081214620-e1/01081214620-e1.jpg?ts=1768488141384&w=1125"
+  },
+  {
+    "id": 2,
+    "name": "Baby Blue Play Shirt",
+    "category": "shirt",
+    "gender": "male",
+    "age_group": "baby",
+    "color": "blue",
+    "style": "casual",
+    "image": "https://image.hm.com/assets/hm/80/32/803263261aa2413de771d9f80e4619a236620a2d.jpg?imwidth=1260"
+  },
+  {
+    "id": 3,
+    "name": "Baby White Onesie",
+    "category": "onesie",
+    "gender": "unisex",
+    "age_group": "baby",
+    "color": "white",
+    "style": "casual",
+    "image": "https://image.made-in-china.com/202f0j00vfwoPrkGYRuB/Custom-Baby-Newborn-Baby-Jumpsuit-Romper-Infant-Clothing-Plain-White-Onesie-Infants-Long-Sleeve-Footie-Play-Suit.webp"
+  },
+  {
+    "id": 4,
+    "name": "Baby Winter Jacket",
+    "category": "jacket",
+    "gender": "unisex",
+    "age_group": "baby",
+    "color": "brown",
+    "style": "winter",
+    "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRE9wRpanI3BHXnRmweqBnIstd3FK7sHtrGrye4SHz8A-c1E5Lr11e1sWF2KLWl6SOCwdcC7kx12bn1955_BfIJqavwjCP1P1cnobTyb-vq8XsUf1wbvysEpw8sGs-vdN51O9oS4P0&usqp=CAc"
+  },
+  {
+    "id": 5,
+    "name": "Baby Yellow T-shirt",
+    "category": "tshirt",
+    "gender": "unisex",
+    "age_group": "baby",
+    "color": "yellow",
+    "style": "casual",
+    "image": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/products/pictures/item/free/original/mothercare/BA778/0/z4fin_tloI-410261576001-1.jpg"
+  },
+
+  {
+    "id": 6,
+    "name": "Boys Blue Casual Shirt",
+    "category": "shirt",
+    "gender": "male",
+    "age_group": "boys",
+    "color": "blue",
+    "style": "casual",
+    "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRQmQZugkQoJuac49PZMphAiViXkLXmNyHf5JFDbkLyyukA_mqdLWhM7OtO5jH0YoWxVTCfNqnyhaecQ0yssJBHD1bDsshe-ZkILL3YFEe6OOprmJxqt7sEbQ"
+  },
+  {
+    "id": 7,
+    "name": "Boys Red Sports T-shirt",
+    "category": "tshirt",
+    "gender": "male",
+    "age_group": "boys",
+    "color": "red",
+    "style": "sporty",
+    "image": "https://cdn.fcglcdn.com/brainbees/images/products/583x720/20702764a.webp"
+  },
+  {
+    "id": 8,
+    "name": "Boys Black Hoodie",
+    "category": "hoodie",
+    "gender": "male",
+    "age_group": "boys",
+    "color": "black",
+    "style": "casual",
+    "image": "https://static2.goldengoose.com/public/Style/ECOMM/GKP01270.P000904-80203-9.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Boys Green Jacket",
+    "category": "jacket",
+    "gender": "male",
+    "age_group": "boys",
+    "color": "green",
+    "style": "winter",
+    "image": "https://assets0.mirraw.com/images/13535056/image_original_zoom.jpeg?1758346953"
+  },
+  {
+    "id": 10,
+    "name": "Boys White T-shirt",
+    "category": "tshirt",
+    "gender": "male",
+    "age_group": "boys",
+    "color": "white",
+    "style": "casual",
+    "image": "https://www2.hm.com/en_in/productpage.1117472136.html"
+  },
+
+  {
+    "id": 11,
+    "name": "Girls Pink Summer Top",
+    "category": "top",
+    "gender": "female",
+    "age_group": "girls",
+    "color": "pink",
+    "style": "casual",
+    "image": "https://assets0.mirraw.com/images/10165797/Pink_Top_Front_zoom.jpg?1649848759"
+  },
+  {
+    "id": 12,
+    "name": "Girls White Casual Shirt",
+    "category": "shirt",
+    "gender": "female",
+    "age_group": "girls",
+    "color": "white",
+    "style": "casual",
+    "image": "https://img.lazcdn.com/g/p/50fd39d2758bd244c4b8d9e9c6f9aa60.jpg_720x720q80.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Girls Denim Jacket",
+    "category": "jacket",
+    "gender": "female",
+    "age_group": "girls",
+    "color": "blue",
+    "style": "modern",
+    "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRvGtl8-VJyJrqfETyVyof5ARdse98E44sHT9LH3qF9_R1dNz5XOsEV_mQq4qS1-4G-6dRqS87oU9BgEJq815wfb2RSRDPI"
+  },
+  {
+    "id": 14,
+    "name": "Girls Red Party Dress",
+    "category": "dress",
+    "gender": "female",
+    "age_group": "girls",
+    "color": "red",
+    "style": "party",
+    "image": "https://dimg.dillards.com/is/image/DillardsZoom/nav2/rare-editions-big-girls-7-16-sleeveless-bow-accented-mikado-fit--flare-dress/00000000_zi_440fe09f-48bc-4e3e-9a16-de107b8e6bae.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Girls Yellow T-shirt",
+    "category": "tshirt",
+    "gender": "female",
+    "age_group": "girls",
+    "color": "yellow",
+    "style": "casual",
+    "image": "https://i.cubmcpaws.com/fit-in/yellow_drop_shoulder_full_sleeve_tshirt_for_girls_f55_yel_.jpg"
+  },
+
+  {
+    "id": 16,
+    "name": "Men Blue Formal Shirt",
+    "category": "shirt",
+    "gender": "male",
+    "age_group": "men",
+    "color": "blue",
+    "style": "formal",
+    "image": "hhttps://garmentproject.com/cdn/shop/products/S_S_Utility_Shirt_-_Washed_Blue-Shirt-GPC1286-550-550_Blue-1_e2833733-32eb-42c3-88ed-3a5582dee805.jpg?v=1683028900&width=1600"
+  },
+  {
+    "id": 17,
+    "name": "Men Black Leather Jacket",
+    "category": "jacket",
+    "gender": "male",
+    "age_group": "men",
+    "color": "black",
+    "style": "modern",
+    "image": "https://media.gq-magazine.co.uk/photos/6995ad9829bf0e6dbaf37a33/3:4/w_748%2Cc_limit/M&S%2520Harrington.png"
+  },
+  {
+    "id": 18,
+    "name": "Men Red Sports T-shirt",
+    "category": "tshirt",
+    "gender": "male",
+    "age_group": "men",
+    "color": "red",
+    "style": "sporty",
+    "image": "https://dikasports.com/cdn/shop/files/41dzd2u54yL._SX679_2c9d6c9c-f7d2-4392-a11e-b8d7473b985d.jpg?v=1731494819&width=660"
+  },
+  {
+    "id": 19,
+    "name": "Men Green Casual Jacket",
+    "category": "jacket",
+    "gender": "male",
+    "age_group": "men",
+    "color": "green",
+    "style": "casual",
+    "image": "https://5.imimg.com/data5/SELLER/Default/2020/10/CD/IZ/IY/12789060/mens-jackets-500x500.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Men White Cotton T-shirt",
+    "category": "tshirt",
+    "gender": "male",
+    "age_group": "men",
+    "color": "white",
+    "style": "casual",
+    "image": "https://gogirgit.com/cdn/shop/products/unisex-men-printed-graphic-white-cotton-tshirt-explore-design-gogirgit_1800x.jpg?v=1665052228"
+  },
+
+  {
+    "id": 21,
+    "name": "Women Pink Casual Blouse",
+    "category": "blouse",
+    "gender": "female",
+    "age_group": "women",
+    "color": "pink",
+    "style": "casual",
+    "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSTCvssPEGljeIGvdinFc8G_AmzJFRwNfope4cUECWKZZcpKnXHx_pVIK3ryW1LZnBZffGDbcf90DhruaGBwVENDWC9JGQaWwFURNzL67NZVooNso3AD4JO1g"
+  },
+  {
+    "id": 22,
+    "name": "Women White Summer Top",
+    "category": "top",
+    "gender": "female",
+    "age_group": "women",
+    "color": "white",
+    "style": "casual",
+    "image": "https://tiimg.tistatic.com/fp/2/007/699/the-women-fashionable-casual-summer-round-neck-short-puffy-sleeves-white-top-191.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Women Black Biker Jacket",
+    "category": "jacket",
+    "gender": "female",
+    "age_group": "women",
+    "color": "black",
+    "style": "modern",
+    "image": "https://image-cdn.ubuy.com/infinity-women-s-chic-black-cropped/400_400_100/66208b83b9845e14215a9a32.jpg"
+  },
+  {
+    "id": 24,
+    "name": "Women Blue Denim Shirt",
+    "category": "shirt",
+    "gender": "female",
+    "age_group": "women",
+    "color": "blue",
+    "style": "casual",
+    "image": "https://5.imimg.com/data5/GV/EI/MY-26510312/women-denim-shirt-500x500.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Women Red Workout Top",
+    "category": "top",
+    "gender": "female",
+    "age_group": "women",
+    "color": "red",
+    "style": "sporty",
+    "image": "https://image.hm.com/assets/hm/a5/61/a561f5fdd2e25f27df0ed6d3a940955bebfe33ba.jpg"
+  }
+]

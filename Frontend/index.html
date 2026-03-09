@@ -7,48 +7,79 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>👗 Virtual Try-On AI</h1>
-    <p class="subtitle">Upload your photo and garment to see the magic!</p>
 
-    <div class="upload-section">
-      <!-- Person Image Upload -->
-      <div class="upload-box" id="personBox">
-        <div class="upload-icon">👤</div>
-        <h3>Person Image</h3>
-        <p>Upload a clear photo of yourself</p>
-        <label for="personImage" class="btn-upload">Choose Image</label>
-        <input type="file" id="personImage" accept="image/*">
-        <img class="preview-image" id="personPreview" alt="Person Preview">
-      </div>
+<div class="container">
 
-      <!-- Garment Image Upload -->
-      <div class="upload-box" id="garmentBox">
-        <div class="upload-icon">👕</div>
-        <h3>Garment Image</h3>
-        <p>Upload the clothing item you want to try</p>
-        <label for="garmentImage" class="btn-upload">Choose Image</label>
-        <input type="file" id="garmentImage" accept="image/*">
-        <img class="preview-image" id="garmentPreview" alt="Garment Preview">
-      </div>
-    </div>
+<h1>👗 Virtual Try-On AI</h1>
+<p class="subtitle">Upload your photo and garment to see the magic!</p>
 
-    <button class="generate-btn" id="generateBtn" disabled>
-      🎨 Generate Try-On
-    </button>
+<div class="upload-section">
 
-    <div class="status" id="status"></div>
+<div class="upload-box" id="personBox">
+  <div class="upload-icon">👤</div>
+  <h3>Person Image</h3>
+  <p>Upload a clear photo</p>
+  <label for="personImage" class="btn-upload">Choose Image</label>
+  <input type="file" id="personImage" accept="image/*">
+  <img class="preview-image" id="personPreview">
+</div>
 
-    <div class="output" id="output">
-      <h2>✨ Your Virtual Try-On Result</h2>
-      <img id="resultImage" alt="Try-On Result">
-      <br><br>
-      <button class="download-btn" id="downloadBtn">
-        📥 Download Image
-      </button>
-    </div>
-  </div>
+<div class="upload-box" id="garmentBox">
+  <div class="upload-icon">👕</div>
+  <h3>Garment Image</h3>
+  <p>Upload clothing item</p>
+  <label for="garmentImage" class="btn-upload">Choose Image</label>
+  <input type="file" id="garmentImage" accept="image/*">
+  <img class="preview-image" id="garmentPreview">
+</div>
 
-  <script src="js/app.js"></script>
+</div>
+
+<button class="generate-btn" id="generateBtn" disabled>
+🎨 Generate Try-On
+</button>
+
+<div class="status" id="status"></div>
+
+<div class="output" id="output">
+
+<h2>✨ Your Virtual Try-On Result</h2>
+
+<img id="resultImage">
+
+<button class="download-btn" id="downloadBtn">
+📥 Download Image
+</button>
+
+
+<!-- NEW rating section -->
+<div id="ratingSection" style="display:none;">
+
+<h3>Select Occasion</h3>
+
+<select id="occasionSelect">
+<option value="casual">Casual</option>
+<option value="formal">Formal</option>
+<option value="business">Business</option>
+<option value="party">Party</option>
+</select>
+
+<br><br>
+
+<button class="generate-btn" id="rateBtn">
+⭐ Rate Try‑On
+</button>
+
+<div id="ratingResult"></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+<script src="js/app.js"></script>
+
 </body>
 </html>
