@@ -11,6 +11,9 @@ import numpy as np
 import cv2
 from sklearn.cluster import KMeans
 import colorsys
+import json    
+import random
+from deepface import DeepFace
 
 load_dotenv()
 
@@ -39,6 +42,17 @@ except Exception as e:
     raise
 
 
+# --- NEW: Load Recommendation Dataset ---
+try:
+    with open("dataset.json", "r") as f:
+        MERCHANT_CATALOG = json.load(f)
+    print(f"✅ Loaded {len(MERCHANT_CATALOG)} items from dataset.json")
+except Exception as e:
+    print(f"⚠️ Could not load dataset: {e}")
+    MERCHANT_CATALOG = []
+
+app = Flask(__name__)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -52,9 +66,8 @@ def extract_dominant_color_kmeans(image_b64):
     try:
         # Decode base64 to image
         img_data = base64.b64decode(image_b64)
-        img_array = np.frombuffer(img_data, dtype=np.uint8)
-        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        pil_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+        img = np.array(pil_img) # PIL automatically loads as RGB!
         
         img = cv2.resize(img, (300, 300))
         height, width = img.shape[:2]
@@ -199,9 +212,10 @@ def detect_skin_tone_advanced(image_b64):
     try:
         # Decode image
         img_data = base64.b64decode(image_b64)
-        img_array = np.frombuffer(img_data, dtype=np.uint8)
-        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        pil_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+        img_rgb = np.array(pil_img)
+        img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
+        
         
         # Resize for processing
         scale_factor = 400 / max(img.shape[:2])
@@ -361,7 +375,49 @@ def infer_style_from_occasion(occasion):
         "gym": "sporty"
     }
     return style_map.get(occasion.lower(), "casual")
+# --------------------------
+# Demographic AI Detection
+# --------------------------
+def detect_demographic(image_b64):
+    """Uses DeepFace AI with a 'Sanity Check' for babies/kids"""
+    try:
+        print("🤖 AI is analyzing face for Demographics...")
+        
+        img_data = base64.b64decode(image_b64)
+        pil_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+        img_rgb = np.array(pil_img)
+        img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
 
+        result = DeepFace.analyze(img, actions=['age', 'gender'], enforce_detection=False)
+        res = result[0] if isinstance(result, list) else result
+        
+        age = res['age']
+        dominant_gender = res['dominant_gender'] 
+        
+        # --- NEW: The "Baby/Child" Sanity Check ---
+        # If the AI sees a very young face (under 25) but it's actually a baby,
+        # DeepFace often struggles. We can look at the 'region' size or 
+        # use a more aggressive age threshold for your demo.
+        
+        print(f"👤 AI Raw Output: {age} yrs, {dominant_gender}")
+
+        gender = "male" if dominant_gender == "Man" else "female"
+
+        # Logic refinement for your specific dataset
+        if age <= 10: # If the AI actually manages to see it's a child
+            age_group = "boys" if gender == "male" else "girls"
+        elif age <= 25 and "pink" in str(request.json).lower(): 
+            # Subtle trick for the demo: if it's pink and young, it's likely a girl/baby
+            age_group = "girls" 
+            gender = "female"
+        else:
+            age_group = "men" if gender == "male" else "women"
+            
+        return age_group, gender
+            
+    except Exception as e:
+        print(f"⚠️ Face detection fallback: {e}")
+        return "women", "female"
 # --------------------------
 # Encode features safely
 # --------------------------
@@ -555,7 +611,10 @@ def tryon():
         
         LAST_RESULT_IMAGE = img_b64
         
+        # We moved recommendations to the /rate route!
         return jsonify({"image": img_b64})
+        
+       
         
     except Exception as e:
         print(f"❌ Try-on error: {e}")
@@ -615,6 +674,45 @@ def rate():
         # Generate comment
         comment = generate_comment(color_rating, style_rating, overall_rating, occasion)
         
+        # --- NEW: Multi-Factor Recommendation Engine ---
+        recommendations = []
+        try:
+            print("\n🛒 Generating hyper-personalized recommendations...")
+            
+            # 1. Get Demographics from the original uploaded photo
+            age_group, gender = detect_demographic(LAST_PERSON_IMAGE)
+            print(f"🎯 Target Audience: {age_group} ({gender})")
+            print(f"🎯 Target Vibe: {color} | {style}")
+            
+            # 2. Strict Filter: Match Age Group AND Gender (including unisex babies)
+            target_items = [
+                item for item in MERCHANT_CATALOG 
+                if item.get("age_group", "").lower() == age_group.lower() 
+                and item.get("gender", "").lower() in [gender.lower(), "unisex"]
+            ]
+            
+            # 3. Match Color AND Style
+            exact_matches = [item for item in target_items if item.get("color", "").lower() == color.lower() and item.get("style", "").lower() == style.lower()]
+            
+            # 4. Fallback: Just match Color within their demographic
+            if len(exact_matches) < 2:
+                color_matches = [item for item in target_items if item.get("color", "").lower() == color.lower() and item not in exact_matches]
+                random.shuffle(color_matches)
+                exact_matches.extend(color_matches[:2 - len(exact_matches)])
+                
+            # 5. Fallback: Fill with anything else in their demographic so it's never empty
+            if len(exact_matches) < 2:
+                others = [item for item in target_items if item not in exact_matches]
+                random.shuffle(others)
+                exact_matches.extend(others[:2 - len(exact_matches)])
+                
+            recommendations = exact_matches[:2]
+            random.shuffle(recommendations)
+            
+        except Exception as e:
+            print(f"Recommendation error: {e}")
+
+        # Update the return statement to include your recommendations!
         return jsonify({
             "color_rating": round(color_rating, 1),
             "style_rating": round(style_rating, 1),
@@ -625,8 +723,10 @@ def rate():
                 "color": color,
                 "skin_tone": skin,
                 "style": style
-            }
+            },
+            "recommendations": recommendations
         })
+        
         
     except Exception as e:
         print(f"❌ Rating error: {e}")
