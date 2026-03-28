@@ -524,18 +524,21 @@ def get_recommendations():
 # --------------------------
 # Run server
 # --------------------------
-
 if __name__ == "__main__":
+    # 1. Get the port from Render's environment, default to 5000 for local testing
+    port = int(os.environ.get("PORT", 5000))
+    
     print("\n" + "="*60)
-    print("🚀 VIRTUAL TRY-ON API SERVER (MERCHANT EDITION)")
+    print("🚀 VIRTUAL TRY-ON API SERVER (PRODUCTION EDITION)")
     print("="*60)
-    print("✅ All ML models loaded")
+    print(f"✅ Running on Port: {port}")
     print("🔒 B2B API Key Security Active")
-    print("🌐 Server: http://127.0.0.1:5000")
+    print("🌐 Ready for Merchant Requests")
     print("="*60 + "\n")
     
-    app.run(debug=True, port=5000)
-
+    # 2. Bind to 0.0.0.0 so it's accessible from the internet
+    # 3. Disable debug=True for production (it's a security risk)
+    app.run(host="0.0.0.0", port=port, debug=False)
 
 
 
