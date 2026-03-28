@@ -160,7 +160,7 @@
     "age_group": "men",
     "color": "blue",
     "style": "formal",
-    "image": "hhttps://garmentproject.com/cdn/shop/products/S_S_Utility_Shirt_-_Washed_Blue-Shirt-GPC1286-550-550_Blue-1_e2833733-32eb-42c3-88ed-3a5582dee805.jpg?v=1683028900&width=1600"
+    "image": "https://garmentproject.com/cdn/shop/products/S_S_Utility_Shirt_-_Washed_Blue-Shirt-GPC1286-550-550_Blue-1_e2833733-32eb-42c3-88ed-3a5582dee805.jpg?v=1683028900&width=1600"
   },
   {
     "id": 17,
@@ -252,5 +252,45 @@
     "color": "red",
     "style": "sporty",
     "image": "https://image.hm.com/assets/hm/a5/61/a561f5fdd2e25f27df0ed6d3a940955bebfe33ba.jpg"
+  },
+
+  {
+    "id": 26,
+    "name": "Women Casual top",
+    "category": "top",
+    "gender": "female",
+    "age_group": "women",
+    "color": "blue",
+    "style": "casual",
+    "image": "https://www.missmosa.in/cdn/shop/files/Images_34.jpg?v=1749205418&width=500"
+  },
+
+  {
+    "id": 27,
+    "name": "Men casual shirt",
+    "category": "shirt",
+    "gender": "male",
+    "age_group": "men",
+    "color": "brown",
+    "style": "casual",
+    "image": "https://img.kwcdn.com/product/fancy/ca2d5d95-516f-45f9-a8f5-e950a7da9d1e.jpg?imageView2/2/w/500/q/60/format/webp"
+  },
+
+  {
+    "id": 28,
+    "name": "Women dress",
+    "category": "dress",
+    "gender": "female",
+    "age_group": "women",
+    "color": "brown",
+    "style": "casual",
+    "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTQ4ZNl3xyc56cceGH9VxY9ywInE3mvRKoTGUY4vsB_RA1MI4WoqMUELZOwO2yoRjK8p2h_tpDYlu__Fu8O0_971sErAVGyeZfX_r5BLTuYHW3vF-PCFxcd"
   }
+
+
+
+
+
+
+
 ]

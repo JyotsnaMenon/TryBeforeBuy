@@ -79,6 +79,9 @@ generateBtn.addEventListener('click', async function() {
     outputDiv.classList.remove('show');
     ratingSection.style.display = 'none';
     
+    // Hide recommendations from any previous run
+    document.getElementById('recommendationsSection').style.display = 'none';
+    
     console.log('Sending request to API...');
     
     const response = await fetch(`${API_URL}/tryon`, {
@@ -169,8 +172,35 @@ rateBtn.addEventListener('click', async function() {
       throw new Error(data.error);
     }
     
-    // Display rating
+    // 1. Display rating scores
     displayRating(data);
+    
+    // 2. Display the 2 AI Recommendations using your existing CSS classes
+    const recsSection = document.getElementById('recommendationsSection');
+    const recsGrid = document.getElementById('recommendationsGrid');
+    
+    if (data.recommendations && data.recommendations.length > 0) {
+      recsGrid.innerHTML = ''; // Clear old ones
+      data.recommendations.forEach(rec => {
+        recsGrid.innerHTML += `
+          <div class="rec-card">
+            <img src="${rec.image}" alt="${rec.name}" class="rec-image">
+            <div class="rec-title">${rec.name}</div>
+            <div class="rec-tags">
+              <span class="rec-tag">${rec.color}</span>
+              <span class="rec-tag">${rec.style}</span>
+            </div>
+          </div>
+        `;
+      });
+      recsSection.style.display = 'block';
+      
+      // Smoothly scroll down so the reviewers see the recommendations appear
+      setTimeout(() => {
+        recsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+    }
+    
     showStatus('⭐ Rating complete!', 'success');
     rateBtn.disabled = false;
     
@@ -228,10 +258,11 @@ function displayRating(data) {
           <span class="feature-label">Color:</span>
           <span class="feature-value">${detected_features.color}</span>
         </div>
-        <div class="feature-item">
+        
+        <!-- <div class="feature-item">
           <span class="feature-label">Skin Tone:</span>
           <span class="feature-value">${detected_features.skin_tone}</span>
-        </div>
+        </div> -->
         <div class="feature-item">
           <span class="feature-label">Style:</span>
           <span class="feature-value">${detected_features.style}</span>
@@ -241,7 +272,7 @@ function displayRating(data) {
   `;
 }
 
-// Show Status Message
+//Show Status Message
 function showStatus(message, type) {
   statusDiv.textContent = message;
   statusDiv.className = 'status';

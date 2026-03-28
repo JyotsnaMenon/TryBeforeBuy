@@ -42,7 +42,7 @@ except Exception as e:
     raise
 
 
-# --- NEW: Load Recommendation Dataset ---
+# ---Load Recommendation Dataset ---
 try:
     with open("dataset.json", "r") as f:
         MERCHANT_CATALOG = json.load(f)
@@ -177,7 +177,7 @@ def rgb_to_color_name_advanced(rgb):
     elif 25 <= h_deg < 50:
         return "Orange"
     elif 50 <= h_deg < 70:
-        # Distinguish yellow from brown
+        
         if v < 0.50:
             return "Brown"
         else:
@@ -187,7 +187,7 @@ def rgb_to_color_name_advanced(rgb):
     elif 165 <= h_deg < 200:
         return "Cyan"
     elif 200 <= h_deg < 250:
-        # Distinguish navy from blue
+        
         if v < 0.45 or (s > 0.6 and v < 0.60):
             return "Navy"
         else:
