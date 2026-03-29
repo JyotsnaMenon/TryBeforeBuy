@@ -11,8 +11,9 @@ WORKDIR /app
 
 # 4. Install essential Linux system drivers for OpenCV and DeepFace
 # This prevents the "libgl1" and "libxcb" errors on cloud servers
+# 4. Install essential Linux system drivers for OpenCV and DeepFace
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
