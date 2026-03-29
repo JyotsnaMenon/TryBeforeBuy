@@ -239,6 +239,9 @@ def infer_style_from_occasion(occasion):
 # --------------------------
 # Demographic AI Detection (UPDATED: Added Fallback Logic)
 # --------------------------
+# --------------------------
+# Demographic AI Detection (UPDATED: Memory Diet Fix)
+# --------------------------
 def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="female"):
     """Uses DeepFace AI with a Garment-Data Fallback for failures"""
     try:
@@ -251,7 +254,15 @@ def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="f
         img_rgb = np.array(pil_img)
         img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
 
-        result = DeepFace.analyze(img, actions=['age', 'gender'], enforce_detection=False)
+        # --- THE CRITICAL MEMORY FIX IS HERE ---
+        result = DeepFace.analyze(
+            img, 
+            actions=['age', 'gender'], 
+            enforce_detection=False,
+            detector_backend='opencv' # Forces lightweight face detection!
+        )
+        # ---------------------------------------
+        
         res = result[0] if isinstance(result, list) else result
         
         age = res['age']
