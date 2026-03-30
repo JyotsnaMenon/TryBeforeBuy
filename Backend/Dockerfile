@@ -1,20 +1,18 @@
-# 1. Stay with 3.11-slim, it's perfect for 1GB limits
+# 1. Use Python 3.11-slim
 FROM python:3.11-slim
 
 # 2. Performance and Port settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-# Railway will override this $PORT, but 5000 is a good local default
 ENV PORT=5000 
 
-# 3. Working directory
+# 3. Working directory inside the container
 WORKDIR /app
 
-# 4. Leaner System Drivers
-# We only need the core GL and GLib libraries for OpenCV. 
-# Removing the DeepFace-specific X11/Render libraries to save space.
+# 4. FIXED: Modern Leaner System Drivers
+# Using libgl1 instead of the old mesa-glx naming
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 
 # 6. Install Python dependencies
-# Adding --no-cache-dir is CRITICAL for Railway to prevent "Disk Limit Reached"
+# This will now skip the heavy DeepFace/TensorFlow stuff
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
@@ -33,5 +31,4 @@ COPY . .
 EXPOSE $PORT
 
 # 9. Gunicorn Start Command
-# Kept at 1 worker and 2-3 threads. This is the "Sweet Spot" for 1GB RAM.
 CMD gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 3 --timeout 120
