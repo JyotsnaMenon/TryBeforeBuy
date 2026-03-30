@@ -35,3 +35,4 @@ EXPOSE $PORT
 
 # 9. Start the server using Gunicorn for production-grade concurrency
 CMD gunicorn app:app --workers 1 --threads 3 --bind 0.0.0.0:$PORT --timeout 120
+
