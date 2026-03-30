@@ -1,7 +1,11 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1' 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-import os
 import base64
 import requests
 from PIL import Image
@@ -14,6 +18,7 @@ import colorsys
 import json    
 import random
 from deepface import DeepFace
+
 
 load_dotenv()
 
@@ -236,12 +241,7 @@ def infer_style_from_occasion(occasion):
     }
     return style_map.get(occasion.lower(), "casual")
 
-# --------------------------
-# Demographic AI Detection (UPDATED: Added Fallback Logic)
-# --------------------------
-# --------------------------
-# Demographic AI Detection (UPDATED: Memory Diet Fix)
-# --------------------------
+
 def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="female"):
     """Uses DeepFace AI with a Garment-Data Fallback for failures"""
     try:
@@ -251,18 +251,27 @@ def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="f
         print("🤖 AI is analyzing face for Demographics...")
         img_data = base64.b64decode(image_b64)
         pil_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+        
+        # 1. Resize the image BEFORE giving it to DeepFace! Massive memory saver.
+        pil_img.thumbnail((400, 400)) 
+        
         img_rgb = np.array(pil_img)
         img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
 
-        # --- THE CRITICAL MEMORY FIX IS HERE ---
+        # 2. Force a garbage collection BEFORE the heavy math starts
+        import gc
+        gc.collect() 
+
         result = DeepFace.analyze(
             img, 
             actions=['age', 'gender'], 
             enforce_detection=False,
-            detector_backend='opencv' # Forces lightweight face detection!
+            detector_backend='opencv'
         )
-        # ---------------------------------------
         
+        # 3. Force garbage collection AFTER the math is done
+        gc.collect()
+
         res = result[0] if isinstance(result, list) else result
         
         age = res['age']
@@ -280,7 +289,6 @@ def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="f
             
     except Exception as e:
         print(f"⚠️ Face detection failed ({e}). Using Garment Fallback: {fallback_age_group}, {fallback_gender}")
-        # SMART FALLBACK: If AI fails, assume the user matches the garment they clicked!
         return fallback_age_group, fallback_gender
 
 # --------------------------
