@@ -17,7 +17,6 @@ from sklearn.cluster import KMeans
 import colorsys
 import json    
 import random
-from deepface import DeepFace
 
 
 load_dotenv()
@@ -243,54 +242,15 @@ def infer_style_from_occasion(occasion):
 
 
 def detect_demographic(image_b64, fallback_age_group="women", fallback_gender="female"):
-    """Uses DeepFace AI with a Garment-Data Fallback for failures"""
-    try:
-        if not image_b64:
-            raise ValueError("No image provided")
-            
-        print("🤖 AI is analyzing face for Demographics...")
-        img_data = base64.b64decode(image_b64)
-        pil_img = Image.open(io.BytesIO(img_data)).convert('RGB')
-        
-        # 1. Resize the image BEFORE giving it to DeepFace! Massive memory saver.
-        pil_img.thumbnail((400, 400)) 
-        
-        img_rgb = np.array(pil_img)
-        img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
-
-        # 2. Force a garbage collection BEFORE the heavy math starts
-        import gc
-        gc.collect() 
-
-        result = DeepFace.analyze(
-            img, 
-            actions=['age', 'gender'], 
-            enforce_detection=False,
-            detector_backend='opencv'
-        )
-        
-        # 3. Force garbage collection AFTER the math is done
-        gc.collect()
-
-        res = result[0] if isinstance(result, list) else result
-        
-        age = res['age']
-        dominant_gender = res['dominant_gender'] 
-        
-        print(f"👤 AI Raw Output: {age} yrs, {dominant_gender}")
-        gender = "male" if dominant_gender == "Man" else "female"
-
-        if age <= 10: 
-            age_group = "boys" if gender == "male" else "girls"
-        else:
-            age_group = "men" if gender == "male" else "women"
-            
-        return age_group, gender
-            
-    except Exception as e:
-        print(f"⚠️ Face detection failed ({e}). Using Garment Fallback: {fallback_age_group}, {fallback_gender}")
-        return fallback_age_group, fallback_gender
-
+    """
+    REPLACEMENT: Bypasses DeepFace to stay under 1GB RAM.
+    Trusts the merchant's garment category as the source of truth.
+    """
+    print("🎯 Using Smart Metadata matching (RAM Optimized)...")
+    
+    # We simply return the metadata passed from the merchant site.
+    # This ensures the user stays in the correct category (e.g. 'Men' or 'Kids')
+    return fallback_age_group, fallback_gender
 # --------------------------
 # Encode features safely & Comments
 # --------------------------
