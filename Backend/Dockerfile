@@ -1,38 +1,37 @@
-# 1. Use an official, lightweight Python 3.11 image as the base
+# 1. Stay with 3.11-slim, it's perfect for 1GB limits
 FROM python:3.11-slim
 
-# 2. Set environment variables for better Python performance in Docker
+# 2. Performance and Port settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PORT=5000
+# Railway will override this $PORT, but 5000 is a good local default
+ENV PORT=5000 
 
-# 3. Set the working directory inside the container
+# 3. Working directory
 WORKDIR /app
 
-# 4. Install essential Linux system drivers for OpenCV and DeepFace
-# This prevents the "libgl1" and "libxcb" errors on cloud servers
-# 4. Install essential Linux system drivers for OpenCV and DeepFace
-RUN apt-get update && apt-get install -y \
-    libgl1 \
+# 4. Leaner System Drivers
+# We only need the core GL and GLib libraries for OpenCV. 
+# Removing the DeepFace-specific X11/Render libraries to save space.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1-mesa-glx \
     libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 5. Copy ONLY the requirements file first (to leverage Docker caching)
+# 5. Requirement Caching
 COPY requirements.txt .
 
-# 6. Install the Python dependencies
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+# 6. Install Python dependencies
+# Adding --no-cache-dir is CRITICAL for Railway to prevent "Disk Limit Reached"
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# 7. Copy the rest of your Backend code (app.py, models folder, dataset.json)
+# 7. Copy Backend code (including models/ and dataset.json)
 COPY . .
 
-# 8. Expose the port so the cloud provider can route traffic to it
+# 8. Use the $PORT variable Railway provides
 EXPOSE $PORT
 
-# 9. Start the server using Gunicorn for production-grade concurrency
-CMD gunicorn app:app --workers 1 --threads 3 --bind 0.0.0.0:$PORT --timeout 120
-
+# 9. Gunicorn Start Command
+# Kept at 1 worker and 2-3 threads. This is the "Sweet Spot" for 1GB RAM.
+CMD gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 3 --timeout 120
